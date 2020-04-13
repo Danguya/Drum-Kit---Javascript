@@ -1,0 +1,79 @@
+<!---
+author: Daniel Gustavo Yava
+data:12/04/2020
+description: Simples Drum kit usando o Javascript.
+
+30 dias e 30 projetos
+Dia - 1
+GitHub - >http://github.com/danguya
+facebook: Wilmy Danguya ODaniel(LINK ->https://www.facebook.com/Daniel.gustavo.yava16)
+Youtube: Kamba do Código (LINK -> https://www.youtube.com/channel/UC5jYw-pt7kWZkKPLV0Obt8w?view_as=subscriber)
+page: Kamba do Código (LINK -> https://www.facebook.com/Kamba-Do-C%C3%B3digo-105259107740283/)
+-->
+<!DOCTYPE html>
+<html lang="pt-ao">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Daniel Gustavo Yava"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Drum Kits by Daniel Gustavo Yava</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="./faveicon.png" type="image/x-icon">
+    </head>
+    <body>
+        
+        <main>
+            <div id="title">
+                <h1>Drum Kits by Daniel Gustavo Yava</h1>
+            </div>
+            <div id="keys">
+                <div data-key="65" class="key">
+                    <kbd>A</kbd>
+                    <span class="sound">KICK</span>
+                </div>
+                <div data-key="83" class="key">
+                    <kbd>S</kbd>
+                    <span class="sound">CLAP</span>
+                </div>
+                <div data-key="68" class="key">
+                    <kbd>D</kbd>
+                    <span class="sound">SNARE</span>
+                </div>
+                <div data-key="70" class="key">
+                    <kbd>F</kbd>
+                    <span class="sound">HAT</span>
+                </div>
+                <div data-key="71" class="key">
+                    <kbd>G</kbd>
+                    <span class="sound">CYMBAL</span>
+                </div>
+                <audio data-key="65" src="./Sounds/kick.wav"></audio>
+                <audio data-key="83" src="./Sounds/clap.wav"></audio>
+                <audio data-key="68" src="./Sounds/snare.wav"></audio>
+                <audio data-key="70" src="./Sounds/hat.wav"></audio>
+                <audio data-key="71" src="./Sounds/cymbal.wav"></audio>
+            </div>
+        </main>
+        <script>
+            
+            function playSound(e){
+                const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+                const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+                if(!audio) return;//pare a função se o elemento for invalido
+                audio.currentTime = 0;//recomeçar o audio para tocar
+                audio.play();
+                key.classList.add('playing');
+            }
+            function removeTransition(e){
+                if(e.propertyName !== 'transform') return;//ignora se isto nao sofreu um transform
+                this.classList.remove('playing');
+            }
+
+            const keys = document.querySelectorAll(".key");
+            
+            keys.forEach(key=>key.addEventListener("transitionend", removeTransition));
+            window.addEventListener("keydown",playSound);
+
+        </script>
+    </body>
+</html>
